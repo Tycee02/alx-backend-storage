@@ -11,7 +11,7 @@ from typing import Any, Callable, Union
 
 class Cache:
     """an object for storing data in a Redis data storage"""
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes a Cache instance by creating a
         Redis client and flushing the database.
@@ -19,6 +19,8 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb(True)
 
+    @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         store the input data in Redis using the random key and return the key.
@@ -30,8 +32,8 @@ class Cache:
     def get(
         self,
         key: str,
-        fn: Optional[Callable] = None
-    ) -> Union[str, bytes, int, float, None]:
+        fn: Callable = None
+    ) -> Union[str, bytes, int, float]:
         """
         Retrieve data from Redis using the provided key and optionally
         convert it using the provided function.
